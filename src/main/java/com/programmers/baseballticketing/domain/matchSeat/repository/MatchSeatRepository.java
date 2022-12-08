@@ -7,7 +7,11 @@ import com.programmers.baseballticketing.domain.matchSeat.model.SeatReservationS
 
 public interface MatchSeatRepository {
 
+	MatchSeat findByMatchIdAndSeatId(Long matchId, Long seatId);
+
 	List<MatchSeat> findAll();
 
 	List<MatchSeat> findBy(Long matchId, SeatReservationStatus status);
+
+	void update(MatchSeat updatedMatchSeat);
 }

@@ -17,6 +17,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.programmers.baseballticketing.common.exception.DeleteFailException;
+import com.programmers.baseballticketing.common.exception.NotFoundException;
 import com.programmers.baseballticketing.common.exception.SaveFailException;
 import com.programmers.baseballticketing.common.exception.UpdateFailException;
 import com.programmers.baseballticketing.domain.match.model.Match;
@@ -42,6 +43,20 @@ public class JdbcMatchRepository implements MatchRepository {
 		}
 
 		return keyHolder.getKey().longValue();
+	}
+
+	@Override
+	public Match findById(Long id) {
+		Match match;
+		try {
+			match = jdbcTemplate.queryForObject(
+				"select * from matches where id = :id",
+				Collections.singletonMap("id", id),
+				matchRowMapper);
+		} catch (DataAccessException e) {
+			throw new NotFoundException();
+		}
+		return match;
 	}
 
 	@Override

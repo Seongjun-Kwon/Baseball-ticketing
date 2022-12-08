@@ -9,6 +9,8 @@ public interface MatchRepository {
 
 	Long save(Match match);
 
+	Match findById(Long id);
+
 	List<Match> findBy(LocalDateTime startTime, String stadiumName, String team);
 
 	List<Match> findAll();

@@ -5,6 +5,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.programmers.baseballticketing.domain.match.model.Match;
+import com.programmers.baseballticketing.domain.match.repository.MatchRepository;
+import com.programmers.baseballticketing.domain.matchSeat.model.MatchSeat;
+import com.programmers.baseballticketing.domain.matchSeat.model.SeatReservationStatus;
+import com.programmers.baseballticketing.domain.matchSeat.repository.MatchSeatRepository;
 import com.programmers.baseballticketing.domain.ticket.model.Ticket;
 import com.programmers.baseballticketing.domain.ticket.repository.TicketRepository;
 import com.programmers.baseballticketing.web.domain.ticket.dto.TicketCreateRequestDto;
@@ -18,9 +23,22 @@ import lombok.RequiredArgsConstructor;
 public class TicketService {
 
 	private final TicketRepository ticketRepository;
+	private final MatchRepository matchRepository;
+	private final MatchSeatRepository matchSeatRepository;
 
 	public TicketResponseDto createTicket(TicketCreateRequestDto ticketCreateRequestDto) {
 		Ticket ticket = ticketCreateRequestDto.toTicket(ticketCreateRequestDto);
+		Match match = matchRepository.findById(ticket.getMatchId());
+		match.decreaseLeftSeatsCount();
+		matchRepository.update(match);
+
+		MatchSeat matchSeat = matchSeatRepository.findByMatchIdAndSeatId(
+			ticketCreateRequestDto.getMatchId(),
+			ticketCreateRequestDto.getSeatId()
+		);
+		matchSeat.changeSeatReservationStatus(SeatReservationStatus.RESERVED);
+		matchSeatRepository.update(matchSeat);
+
 		ticketRepository.save(ticket);
 		return TicketResponseDto.toTicketResponseDto(ticket);
 	}

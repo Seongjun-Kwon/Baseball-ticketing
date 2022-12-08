@@ -31,4 +31,8 @@ public class Match {
 		this.leftSeatsCount = leftSeatsCount;
 		this.stadiumId = stadiumId;
 	}
+
+	public void decreaseLeftSeatsCount() {
+		this.leftSeatsCount--;
+	}
 }

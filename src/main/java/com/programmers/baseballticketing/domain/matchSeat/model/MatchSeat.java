@@ -13,4 +13,8 @@ public class MatchSeat {
 	private SeatReservationStatus status;
 	private final Long matchId;
 	private final Long seatId;
+
+	public void changeSeatReservationStatus(SeatReservationStatus status) {
+		this.status = status;
+	}
 }
