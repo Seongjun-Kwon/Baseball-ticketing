@@ -46,18 +46,19 @@ public class JdbcTicketRepository implements TicketRepository {
 	@Override
 	public List<Ticket> findBy(Long matchId, LocalDateTime startTime, String team, Long userId) {
 		Map<String, Object> queryMap = new HashMap<>();
-		StringBuilder queryBuilder = new StringBuilder("select * from tickets where 1=1");
+		StringBuilder queryBuilder = new StringBuilder(
+			"select t.* from tickets t left outer join matches m on t.match_id = m.id where 1=1");
 
 		if (matchId != null) {
 			queryBuilder.append(" and match_id = :matchId");
 			queryMap.put("matchId", matchId);
 		}
 		if (startTime != null) {
-			queryBuilder.append(" and start_time = :startTime");
+			queryBuilder.append(" and m.start_time = :startTime");
 			queryMap.put("startTime", startTime);
 		}
 		if (team != null) {
-			queryBuilder.append(" and team = :team");
+			queryBuilder.append(" and (m.home_team_name = :team or m.away_team_name = :team)");
 			queryMap.put("team", team);
 		}
 		if (userId != null) {
