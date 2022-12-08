@@ -7,11 +7,9 @@ import com.programmers.baseballticketing.domain.stadium.model.Stadium;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public class MatchRequestDto {
 
 	private LocalDateTime startTime;
@@ -22,7 +20,6 @@ public class MatchRequestDto {
 
 	public Match toMatch(MatchRequestDto matchRequestDto) {
 		return new Match(
-			null,
 			matchRequestDto.getStartTime(),
 			matchRequestDto.getHomeTeamName(),
 			matchRequestDto.getAwayTeamName(),

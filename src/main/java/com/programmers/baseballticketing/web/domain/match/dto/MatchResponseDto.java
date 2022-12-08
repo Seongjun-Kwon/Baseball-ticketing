@@ -12,6 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MatchResponseDto {
 
+	private Long id;
 	private LocalDateTime startTime;
 	private String homeTeamName;
 	private String awayTeamName;
@@ -20,11 +21,16 @@ public class MatchResponseDto {
 
 	public static MatchResponseDto toResponseDto(Match match) {
 		return new MatchResponseDto(
+			match.getId(),
 			match.getStartTime(),
 			match.getHomeTeamName(),
 			match.getAwayTeamName(),
 			match.getLeftSeatsCount(),
 			Stadium.getStadiumById(match.getStadiumId()).getName()
 		);
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

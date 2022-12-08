@@ -22,8 +22,10 @@ public class MatchService {
 
 	public MatchResponseDto createMatch(MatchRequestDto matchRequestDto) {
 		Match match = matchRequestDto.toMatch(matchRequestDto);
-		matchRepository.save(match);
-		return MatchResponseDto.toResponseDto(match);
+		Long matchId = matchRepository.save(match);
+		MatchResponseDto matchResponseDto = MatchResponseDto.toResponseDto(match);
+		matchResponseDto.setId(matchId);
+		return matchResponseDto;
 	}
 
 	public List<MatchResponseDto> getMatchesBy(LocalDateTime startTime, Stadium stadium, String team) {
