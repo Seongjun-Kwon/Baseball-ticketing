@@ -5,12 +5,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.programmers.baseballticketing.domain.match.model.Match;
 import com.programmers.baseballticketing.domain.ticket.model.Ticket;
 import com.programmers.baseballticketing.domain.ticket.repository.TicketRepository;
-import com.programmers.baseballticketing.domain.user.model.User;
-import com.programmers.baseballticketing.web.domain.ticket.dto.TicketRequestDto;
+import com.programmers.baseballticketing.web.domain.ticket.dto.TicketCreateRequestDto;
 import com.programmers.baseballticketing.web.domain.ticket.dto.TicketResponseDto;
+import com.programmers.baseballticketing.web.domain.ticket.dto.TicketSearchRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,14 +19,19 @@ public class TicketService {
 
 	private final TicketRepository ticketRepository;
 
-	public TicketResponseDto createTicket(TicketRequestDto ticketRequestDto) {
-		Ticket ticket = ticketRequestDto.toTicket(ticketRequestDto);
+	public TicketResponseDto createTicket(TicketCreateRequestDto ticketCreateRequestDto) {
+		Ticket ticket = ticketCreateRequestDto.toTicket(ticketCreateRequestDto);
 		ticketRepository.save(ticket);
 		return TicketResponseDto.toTicketResponseDto(ticket);
 	}
 
-	public List<TicketResponseDto> getTicketsBy(Match match, User user) {
-		List<Ticket> tickets = ticketRepository.findBy(match, user);
+	public List<TicketResponseDto> getTicketsBy(TicketSearchRequestDto ticketSearchRequestDto) {
+		List<Ticket> tickets = ticketRepository.findBy(
+			ticketSearchRequestDto.getMatchId(),
+			ticketSearchRequestDto.getStartTime(),
+			ticketSearchRequestDto.getTeam(),
+			ticketSearchRequestDto.getUserId()
+		);
 		return tickets.stream()
 			.map(TicketResponseDto::toTicketResponseDto)
 			.collect(Collectors.toList());

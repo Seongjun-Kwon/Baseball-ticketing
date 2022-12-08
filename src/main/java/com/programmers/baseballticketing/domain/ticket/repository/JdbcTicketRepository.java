@@ -18,10 +18,8 @@ import org.springframework.stereotype.Repository;
 
 import com.programmers.baseballticketing.common.exception.DeleteFailException;
 import com.programmers.baseballticketing.common.exception.SaveFailException;
-import com.programmers.baseballticketing.domain.match.model.Match;
 import com.programmers.baseballticketing.domain.ticket.model.PaymentStatus;
 import com.programmers.baseballticketing.domain.ticket.model.Ticket;
-import com.programmers.baseballticketing.domain.user.model.User;
 
 @Repository
 public class JdbcTicketRepository implements TicketRepository {
@@ -46,17 +44,25 @@ public class JdbcTicketRepository implements TicketRepository {
 	}
 
 	@Override
-	public List<Ticket> findBy(Match match, User user) {
+	public List<Ticket> findBy(Long matchId, LocalDateTime startTime, String team, Long userId) {
 		Map<String, Object> queryMap = new HashMap<>();
 		StringBuilder queryBuilder = new StringBuilder("select * from tickets where 1=1");
 
-		if (match != null) {
+		if (matchId != null) {
 			queryBuilder.append(" and match_id = :matchId");
-			queryMap.put("matchId", match.getId());
+			queryMap.put("matchId", matchId);
 		}
-		if (user != null) {
+		if (startTime != null) {
+			queryBuilder.append(" and start_time = :startTime");
+			queryMap.put("startTime", startTime);
+		}
+		if (team != null) {
+			queryBuilder.append(" and team = :team");
+			queryMap.put("team", team);
+		}
+		if (userId != null) {
 			queryBuilder.append(" and user_id = :userId");
-			queryMap.put("userId", user.getId());
+			queryMap.put("userId", userId);
 		}
 
 		return jdbcTemplate.query(queryBuilder.toString(), queryMap, ticketRowMapper);
