@@ -28,7 +28,7 @@ public class JdbcMatchSeatRepository implements MatchSeatRepository {
 		MatchSeat matchSeat;
 		try {
 			matchSeat = jdbcTemplate.queryForObject(
-				"select * from matchSeats where match_id = :matchId and seat_id = :seatId",
+				"select * from match_seats where match_id = :matchId and seat_id = :seatId",
 				Map.of("matchId", matchId, "seatId", seatId),
 				matchSeatRowMapper);
 		} catch (DataAccessException e) {
@@ -43,7 +43,7 @@ public class JdbcMatchSeatRepository implements MatchSeatRepository {
 	}
 
 	@Override
-	public List<MatchSeat> findBy(Long matchId, SeatReservationStatus status) {
+	public List<MatchSeat> findBy(Long matchId, String status) {
 		Map<String, Object> queryMap = new HashMap<>();
 		StringBuilder queryBuilder = new StringBuilder("select * from match_seats where 1=1");
 
@@ -53,7 +53,7 @@ public class JdbcMatchSeatRepository implements MatchSeatRepository {
 		}
 		if (status != null) {
 			queryBuilder.append(" and status = :status");
-			queryMap.put("status", status.name());
+			queryMap.put("status", SeatReservationStatus.getSeatReservationStatus(status).name());
 		}
 
 		return jdbcTemplate.query(queryBuilder.toString(), queryMap, matchSeatRowMapper);
