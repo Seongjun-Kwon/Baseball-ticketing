@@ -2,9 +2,13 @@ package com.programmers.baseballticketing.domain.stadium.model;
 
 import java.util.Arrays;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
+@AllArgsConstructor
+@RequiredArgsConstructor
 public enum Stadium {
 
 	JAMSIL(1L, "서울종합운동장 야구장", 25553),
@@ -19,13 +23,7 @@ public enum Stadium {
 
 	private final Long id;
 	private final String name;
-	private final Integer seatsCount;
-
-	Stadium(Long id, String name, Integer seatsCount) {
-		this.id = id;
-		this.name = name;
-		this.seatsCount = seatsCount;
-	}
+	private Integer seatsCount;
 
 	public static Stadium getStadiumById(Long id) {
 		return Arrays.stream(Stadium.values())
