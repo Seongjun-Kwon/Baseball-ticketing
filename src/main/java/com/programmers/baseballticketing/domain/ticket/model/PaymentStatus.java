@@ -10,7 +10,7 @@ public enum PaymentStatus {
 
 	public static PaymentStatus getTicketStatus(String status) {
 		return Arrays.stream(PaymentStatus.values())
-			.filter(ticketStatus -> ticketStatus.equals(status))
+			.filter(ticketStatus -> ticketStatus.name().equals(status))
 			.findFirst()
 			.orElseThrow(() -> {
 				throw new IllegalArgumentException("결제 상태를 잘못 입력하였습니다.");
