@@ -98,14 +98,14 @@ public class JdbcMatchRepository implements MatchRepository {
 	}
 
 	private Map<String, Object> toMatchParamMap(Match match) {
-		return Map.of(
-			"id", match.getId(),
-			"startTime", match.getStartTime(),
-			"homeTeamName", match.getHomeTeamName(),
-			"awayTeamName", match.getAwayTeamName(),
-			"leftSeatsCount", match.getLeftSeatsCount(),
-			"stadiumId", match.getStadiumId()
-		);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("id", match.getId());
+		paramMap.put("startTime", match.getStartTime());
+		paramMap.put("homeTeamName", match.getHomeTeamName());
+		paramMap.put("awayTeamName", match.getAwayTeamName());
+		paramMap.put("leftSeatsCount", match.getLeftSeatsCount());
+		paramMap.put("stadiumId", match.getStadiumId());
+		return paramMap;
 	}
 
 	private RowMapper<Match> matchRowMapper = (rs, rowNum) -> {
