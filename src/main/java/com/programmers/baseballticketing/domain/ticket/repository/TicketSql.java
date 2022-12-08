@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum TicketSql {
 
 	INSERT(
-		"insert into tickets(status, created_at, last_modified_at, match_id, seat_id, user_id, price) values (:status, :createdAt, :lastModifedAt, :matchId, :seatId, :userId, :price)"),
+		"insert into tickets(status, created_at, last_modified_at, match_id, seat_id, user_id, price) values (:status, :createdAt, :lastModifiedAt, :matchId, :seatId, :userId, :price)"),
 	SELECT_ALL("select * from tickets"),
 	DELETE_BY_ID("delete from tickets where id = :id"),
 	DELETE_ALL("delete from tickets");

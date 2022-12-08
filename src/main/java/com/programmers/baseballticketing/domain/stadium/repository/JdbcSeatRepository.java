@@ -39,7 +39,7 @@ public class JdbcSeatRepository implements SeatRepository {
 		SeatSection section = SeatSection.getSeatSection(rs.getString("section"));
 		Integer seatNumber = rs.getInt("seat_number");
 		Integer price = rs.getInt("price");
-		Long stadiumId = rs.getLong("stadiumId");
+		Long stadiumId = rs.getLong("stadium_id");
 		return new Seat(id, section, seatNumber, price, stadiumId);
 	};
 }
