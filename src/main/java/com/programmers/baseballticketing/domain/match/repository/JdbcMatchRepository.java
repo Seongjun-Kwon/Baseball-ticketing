@@ -45,7 +45,7 @@ public class JdbcMatchRepository implements MatchRepository {
 	}
 
 	@Override
-	public List<Match> findBy(LocalDateTime startTime, Stadium stadium, String team) {
+	public List<Match> findBy(LocalDateTime startTime, String stadiumName, String team) {
 		Map<String, Object> queryMap = new HashMap<>();
 		StringBuilder queryBuilder = new StringBuilder("select * from matches where 1=1");
 
@@ -53,9 +53,9 @@ public class JdbcMatchRepository implements MatchRepository {
 			queryBuilder.append(" and start_time = :startTime");
 			queryMap.put("startTime", startTime);
 		}
-		if (stadium != null) {
+		if (stadiumName != null) {
 			queryBuilder.append(" and stadium_id = :stadiumId");
-			queryMap.put("stadiumId", stadium.getId());
+			queryMap.put("stadiumId", Stadium.getStadiumByName(stadiumName).getId());
 		}
 		if (team != null) {
 			queryBuilder.append(" and (home_team_name = :team or away_team_name = :team)");

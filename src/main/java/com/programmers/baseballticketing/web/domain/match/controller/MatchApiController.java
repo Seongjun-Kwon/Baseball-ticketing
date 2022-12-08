@@ -3,7 +3,6 @@ package com.programmers.baseballticketing.web.domain.match.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.programmers.baseballticketing.domain.match.service.MatchService;
-import com.programmers.baseballticketing.domain.stadium.model.Stadium;
 import com.programmers.baseballticketing.web.domain.match.dto.MatchRequestDto;
 import com.programmers.baseballticketing.web.domain.match.dto.MatchResponseDto;
 
@@ -35,16 +33,17 @@ public class MatchApiController {
 	}
 
 	@GetMapping("/all")
-	public List<MatchResponseDto> getVouchers(
-		@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime startTime,
-		@RequestParam(required = false) Stadium stadium,
+	public List<MatchResponseDto> getMatches(
+		@RequestParam(required = false) LocalDateTime startTime,
+		@RequestParam(required = false) String stadiumName,
 		@RequestParam(required = false) String team
 	) {
-		return matchService.getMatchesBy(startTime, stadium, team);
+		return matchService.getMatchesBy(startTime, stadiumName, team);
 	}
 
 	@PatchMapping("/{matchId}")
-	public MatchResponseDto updateMatch(@PathVariable Long matchId, @RequestBody MatchRequestDto matchRequestDto) {
+	public MatchResponseDto updateMatch(@PathVariable Long matchId,
+		@RequestBody MatchRequestDto matchRequestDto) {
 		return matchService.updateMatch(matchId, matchRequestDto);
 	}
 

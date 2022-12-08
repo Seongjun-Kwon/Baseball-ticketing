@@ -4,13 +4,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.programmers.baseballticketing.domain.match.model.Match;
-import com.programmers.baseballticketing.domain.stadium.model.Stadium;
 
 public interface MatchRepository {
 
 	Long save(Match match);
 
-	List<Match> findBy(LocalDateTime startTime, Stadium stadium, String team);
+	List<Match> findBy(LocalDateTime startTime, String stadiumName, String team);
 
 	List<Match> findAll();
 

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.programmers.baseballticketing.domain.match.model.Match;
 import com.programmers.baseballticketing.domain.match.repository.MatchRepository;
-import com.programmers.baseballticketing.domain.stadium.model.Stadium;
 import com.programmers.baseballticketing.web.domain.match.dto.MatchRequestDto;
 import com.programmers.baseballticketing.web.domain.match.dto.MatchResponseDto;
 
@@ -28,8 +27,8 @@ public class MatchService {
 		return matchResponseDto;
 	}
 
-	public List<MatchResponseDto> getMatchesBy(LocalDateTime startTime, Stadium stadium, String team) {
-		List<Match> matches = matchRepository.findBy(startTime, stadium, team);
+	public List<MatchResponseDto> getMatchesBy(LocalDateTime startTime, String stadiumName, String team) {
+		List<Match> matches = matchRepository.findBy(startTime, stadiumName, team);
 		return matches.stream()
 			.map(MatchResponseDto::toResponseDto)
 			.collect(Collectors.toList());
