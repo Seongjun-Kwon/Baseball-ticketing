@@ -13,7 +13,7 @@ public enum SeatSection {
 
 	public static SeatSection getSeatSection(String section) {
 		return Arrays.stream(SeatSection.values())
-			.filter(seatSection -> seatSection.equals(section))
+			.filter(seatSection -> seatSection.name().equals(section))
 			.findFirst()
 			.orElseThrow(() -> {
 				throw new IllegalArgumentException("좌석 구역이 잘못 입력되었습니다.");

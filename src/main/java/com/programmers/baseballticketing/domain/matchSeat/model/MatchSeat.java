@@ -1,4 +1,4 @@
-package com.programmers.baseballticketing.domain.ticket.model;
+package com.programmers.baseballticketing.domain.matchSeat.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
