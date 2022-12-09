@@ -20,7 +20,7 @@ public class MatchSeatApiController {
 
 	private final MatchSeatService matchSeatService;
 
-	@GetMapping
+	@GetMapping("/all")
 	public List<MatchSeatResponseDto> getMatchSeats(
 		@RequestParam(required = false) Long matchId,
 		@RequestParam(required = false) String status
