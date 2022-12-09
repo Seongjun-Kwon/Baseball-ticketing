@@ -19,6 +19,7 @@ import com.programmers.baseballticketing.domain.match.service.MatchService;
 import com.programmers.baseballticketing.web.domain.match.dto.MatchCreateRequestDto;
 import com.programmers.baseballticketing.web.domain.match.dto.MatchResponseDto;
 import com.programmers.baseballticketing.web.domain.match.dto.MatchSearchRequestDto;
+import com.programmers.baseballticketing.web.domain.match.dto.MatchUpdateRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,9 +48,9 @@ public class MatchApiController {
 	@PatchMapping("/{matchId}")
 	public MatchResponseDto updateMatch(
 		@PathVariable Long matchId,
-		@RequestBody MatchCreateRequestDto matchCreateRequestDto
+		@RequestBody MatchUpdateRequestDto matchUpdateRequestDto
 	) {
-		return matchService.updateMatch(matchId, matchCreateRequestDto);
+		return matchService.updateMatch(matchId, matchUpdateRequestDto);
 	}
 
 	@DeleteMapping("/{matchId}")

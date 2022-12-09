@@ -10,6 +10,7 @@ import com.programmers.baseballticketing.domain.match.repository.MatchRepository
 import com.programmers.baseballticketing.web.domain.match.dto.MatchCreateRequestDto;
 import com.programmers.baseballticketing.web.domain.match.dto.MatchResponseDto;
 import com.programmers.baseballticketing.web.domain.match.dto.MatchSearchRequestDto;
+import com.programmers.baseballticketing.web.domain.match.dto.MatchUpdateRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,10 +46,18 @@ public class MatchService {
 			.collect(Collectors.toList());
 	}
 
-	public MatchResponseDto updateMatch(Long matchId, MatchCreateRequestDto matchCreateRequestDto) {
-		Match match = matchCreateRequestDto.toMatch(matchId, matchCreateRequestDto);
-		matchRepository.update(match);
-		return MatchResponseDto.toResponseDto(match);
+	public MatchResponseDto updateMatch(Long matchId, MatchUpdateRequestDto matchUpdateRequestDto) {
+		Match match = matchRepository.findById(matchId);
+		Match updatedMatch = new Match(
+			matchId,
+			matchUpdateRequestDto.getStartTime(),
+			match.getHomeTeamName(),
+			match.getAwayTeamName(),
+			matchUpdateRequestDto.getLeftSeatsCount(),
+			match.getStadiumId()
+		);
+		matchRepository.update(updatedMatch);
+		return MatchResponseDto.toResponseDto(updatedMatch);
 	}
 
 	public void deleteMatchById(Long id) {
